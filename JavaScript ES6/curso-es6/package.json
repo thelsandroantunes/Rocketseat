@@ -5,14 +5,22 @@
     "main": "index.js",
     "author": "thelsandro",
     "license": "MIT",
-    "dependencies": {
+    "devDependencies": {
         "@babel/cli": "^7.5.5",
         "@babel/core": "^7.5.5",
         "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-        "@babel/preset-env": "^7.5.5"
+        "@babel/preset-env": "^7.5.5",
+        "babel-loader": "^8.0.6",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.7",
+        "webpack-dev-server": "^3.8.0"
     },
     "scripts": {
-        "dev": "babel ./main.js -o ./bundle.js -w",
-        "dev2": "babel ./desafio01.js -o ./bundle01.js -w"
+        "dev": "babel ./src/main.js -o ./public/bundle.js -w",
+        "build": "webpack --mode=production",
+        "desaf01": "babel ./desafio-01/desafio01.js -o ./desafio-01/bundle01.js -w",
+        "desaf02": "babel ./desafio-02/desafio02.js -o ./desafio-02/bundle02.js -w",
+        "dev3": "webpack --mode=development -w",
+        "dev4": "webpack-dev-server --mode=development"
     }
 }

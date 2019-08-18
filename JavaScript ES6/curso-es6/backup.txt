@@ -1,3 +1,4 @@
+/*
 //REST
 
 const novo = {
@@ -35,7 +36,7 @@ const i = 32;
 
 console.log(`Meu nome eh ${n} e minha idade eh ${i}`);
 
-
+*/
 
 /*const user = {
     name: 'Thelsandro',
@@ -126,4 +127,11 @@ const find = arr.find(function(item) {
     return item === 6;
 });
 
+
 console.log(find); */
+
+
+
+
+//"dev": "babel ./main.js -o ./bundle.js -w",
+        "dev2": "babel ./desafio01.js -o ./bundle01.js -w"
