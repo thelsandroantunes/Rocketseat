@@ -1,8 +1,16 @@
 {
-  "name": "curso-es6",
-  "version": "1.0.0",
-  "description": "curso de javascript es6 da rocketseat",
-  "main": "index.js",
-  "author": "thelsandro",
-  "license": "MIT"
+    "name": "curso-es6",
+    "version": "1.0.0",
+    "description": "curso de javascript es6 da rocketseat",
+    "main": "index.js",
+    "author": "thelsandro",
+    "license": "MIT",
+    "dependencies": {
+        "@babel/cli": "^7.5.5",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5"
+    },
+    "scripts": {
+        "dev": "babel ./main.js -o ./bundle.js -w"
+    }
 }
