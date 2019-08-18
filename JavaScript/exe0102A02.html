@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>
+        Exercícios AULA02
+    </title>
+
+
+
+</head>
+
+<body>
+
+    <div id="app">
+        <ul></ul>
+        <button>Adicionar</button>
+    </div>
+
+
+    <script>
+        var listElement = document.querySelector('#app ul');
+        var buttonElement = document.querySelector('#app button');
+
+        function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        var newColor = getRandomColor(); // #E943F0
+
+        function renderBox() {
+
+            var boxElement = document.createElement('div');
+            boxElement.style['width'] = '100px';
+            boxElement.style['height'] = '100px';
+            boxElement.style.backgroundColor = 'red';
+            boxElement.style.borderStyle = 'solid';
+
+            boxElement.onmouseover = function() {
+                boxElement.style.backgroundColor = getRandomColor();
+            }
+
+            listElement.appendChild(boxElement);
+
+
+        }
+
+        renderBox();
+
+        function addBox() {
+            renderBox();
+        }
+
+
+
+        buttonElement.onclick = addBox;
+    </script>
+</body>
+
+</html>
