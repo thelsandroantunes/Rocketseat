@@ -55,3 +55,5 @@ function saveToStorage() {
 
     localStorage.setItem('list_todos', JSON.stringify(todos));
 }
+
+//criando tag pelo javascript

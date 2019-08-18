@@ -25,3 +25,5 @@ axios.get('https://api.github.com/users/diego3g')
         console.log(error);
 
     })
+
+//Usando axios
