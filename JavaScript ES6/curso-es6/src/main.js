@@ -1,171 +1,74 @@
-/* // Funão delay aciona o .then após 1s
-const delay = () => new Promise(resolve => setTimeout(resolve, 1000));
+import  api  from "./api";
 
-function umPorSegundo() {
-    delay().then(() => {
-        console.log('1s');
-        delay().then(() => {
-            console.log('2s');
-            delay().then(() => {
-                console.log('3s');
-            });
-        })
-    });
-}
-umPorSegundo(); */
+class App {
+    constructor(){
+        this.repositories =[];
 
-var timer_interval = performance.now();
+        this.formEl = document.getElementById('repo-form');
+        this.inputEl = document.querySelector('input[name=repository]')
+        this.listEl = document.getElementById('repo-list');
 
-const novoDelay = function() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('s');
-        }, 1000);
-    });
-}
+        this.registerHandlers();
+    }
 
-async function exeDelay() {
-    console.log('1' + await novoDelay());
-    console.log('2' + await novoDelay());
-    console.log('3' + await novoDelay());
-}
+    registerHandlers(){
+        this.formEl.onsubmit = event =>this.addRepository(event);
+    }
 
-//exeDelay();
+    async addRepository(event){
+        event.preventDefault();
 
-import axios from 'axios';
+        const repoInput = this.inputEl.value;
 
-function getUserFromGithub(user) {
-    axios.get(`https://api.github.com/users/${user}`)
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(err => {
-            console.log('Usuário não existe');
-        })
-}
-//getUserFromGithub('diego3g');
-//getUserFromGithub('diego3g124123');
-
-class ApiGit {
-    static async getUserFromGithub(username) {
-        try {
-            const response = await axios.get(`https://api.github.com/users/${username}`);
-            console.log(response);
-        } catch {
-            console.log('Erro na Api Git');
-
+        if (repoInput.length === 0) {
+            return;
         }
+
+        const response = await api.get(`/repos/${repoInput}`);
+
+        const {name, description, html_url, owner: {avatar_url}} = response.data;
+
+        this.repositories.push({
+            name,
+            description,
+            avatar_url,
+            html_url,
+
+        });
+
+        this.inputEl.value = '';
+        console.log(this.repositories);
+
+        this.render();
+    }
+
+    render(){
+        this.listEl.innerHTML = '';
+
+        this.repositories.forEach(repo => {
+            let imgEl = document.createElement('img');
+            imgEl.setAttribute('src', repo.avatar_url);
+
+            let titleEl = document.createElement('strong');
+            titleEl.appendChild(document.createTextNode(repo.name));
+
+            let descriptionEl = document.createElement('p');
+            descriptionEl.appendChild(document.createTextNode(repo.description));
+
+            let linkEl = document.createElement('a');
+            linkEl.setAttribute('target', '_blank');
+            linkEl.setAttribute('href', repo.html_url);
+            linkEl.appendChild(document.createTextNode('Acessar'));
+
+            let listItemEl = document.createElement('li');
+            listItemEl.appendChild(imgEl);
+            listItemEl.appendChild(titleEl);
+            listItemEl.appendChild(descriptionEl);
+            listItemEl.appendChild(linkEl);
+
+            this.listEl.appendChild(listItemEl);
+        });
     }
 }
 
-//ApiGit.getUserFromGithub('rocketseat');
-//ApiGit.getUserFromGithub('LuizGlomyer');
-
-
-class Github {
-    static getRepositories(repo) {
-        axios.get(`https://api.github.com/users/${repo}/repos`)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(err => {
-                console.log('Repositório não existe');
-            })
-    }
-}
-//Github.getRepositories('Rocketseat');
-//Github.getRepositories('rocketseat/dslkvmskv');
-
-class APIGitHub {
-    static async getRepositories(repo) {
-        try {
-            const response = await axios.get(`https://api.github.com/users/${repo}/repos`);
-            console.log(response);
-        } catch {
-            console.log('Erro na Api GitHub');
-
-        }
-    }
-}
-
-//APIGitHub.getRepositories('Rocketseat');
-
-const buscaUsuario = usuario => {
-        axios.get(`https://api.github.com/users/${user}`)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(err => {
-                console.log('Usuário não existe');
-            });
-    }
-    //buscaUsuario('diego3g');
-
-// D
-
-const buscaUsuario = async usuario => {
-    try {
-        const response = await axios.get(`https://api.github.com/users/${usuario}`);
-
-        console.log(response.data);
-    } catch (err) {
-        console.log("Usuário não existe");
-    }
-};
-
-buscaUsuario("thelsandroantunes");
-
-/*import axios from 'axios';
-class API {
-    static async getUSerInfo(username) {
-        try {
-            const response = await axios.get(`https://api.github.com/users/${username}`);
-            console.log(response);
-        } catch {
-            console.log('ERRO NA API ');
-
-        }
-    }
-}
-
-API.getUSerInfo('thelsandroantunes');
-var divElement = document.getElementById('app');
-var btnElement = document.createElement('button');
-var txtButton = document.createTextNode("Click Me!");
-btnElement.appendChild(txtButton);
-
-
-divElement.appendChild(btnElement);
-console.log('Vai ' + btnElement);*/
-
-
-
-/*const myPromise = function() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve("OK!"), 2000)
-    });
-}
-
-async function exePromise() {
-
-    console.log(await myPromise());
-    console.log(await myPromise());
-    console.log(await myPromise());
-}
-
-exePromise();
-
-async function f() {
-
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => resolve("done!"), 2000)
-    });
-
-    let result = await promise; // wait till the promise resolves (*)
-    console.log(result);
-    console.log(result);
-    console.log(result);
-    alert(result); // "done!"
-}
-
-f();*/
+new App();
