@@ -1,2 +1,2 @@
 # Rocketseat
- Cursos Básicos das 
+ Códigos Básicos das principais tecnologias
